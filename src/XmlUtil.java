@@ -1,3 +1,4 @@
+import config.Config;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -147,7 +148,11 @@ public class XmlUtil {
     }
     if (NORMAL_TYPE == getOutType()) {
 
-      methods.add(attr.substring(attr.indexOf("/") + 1) + " = (" + node.getNodeName() + ") findViewById(R.id." + attr.substring(attr.indexOf("/") + 1) + ");");
+      if (Config.ROOT_TYPE == 0) {
+        methods.add(attr.substring(attr.indexOf("/") + 1) + " = (" + node.getNodeName() + ") findViewById(R.id." + attr.substring(attr.indexOf("/") + 1) + ");");
+      } else {
+        methods.add(attr.substring(attr.indexOf("/") + 1) + " = (" + node.getNodeName() + ") view.findViewById(R.id." + attr.substring(attr.indexOf("/") + 1) + ");");
+      }
 
       return "private " + node.getNodeName() + " " + attr.substring(attr.indexOf("/") + 1) + ";";
     }

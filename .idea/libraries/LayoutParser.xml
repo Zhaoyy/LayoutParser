@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="LayoutParser">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/LayoutParser.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

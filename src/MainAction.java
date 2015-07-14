@@ -46,7 +46,7 @@ public class MainAction extends AnAction {
       dialog.setmFile(mFile);
       dialog.setProject(project);
 
-      dialog.setSize(420, 300);
+      dialog.setSize(440, 300);
 
       dialog.setLocationRelativeTo(null);
       dialog.setVisible(true);

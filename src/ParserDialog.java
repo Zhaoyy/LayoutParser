@@ -10,10 +10,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -21,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 public class ParserDialog extends JDialog implements ActionListener {
@@ -33,10 +30,14 @@ public class ParserDialog extends JDialog implements ActionListener {
   private JLabel lblName;
   private JLabel lblOut;
   private JTextArea textArea1;
+  private JRadioButton rbtnActivity;
+  private JRadioButton rbtnView;
 
-  private static final String out = "src" + File.separator + "androidTest" + File.separator + "out.txt";
+  private static final String out =
+      "src" + File.separator + "androidTest" + File.separator + "out.txt";
 
-  private ButtonGroup buttonGroup;
+  private ButtonGroup typeGroup;
+  private ButtonGroup rootGroup;
 
   private PsiFile mFile;
 
@@ -76,7 +77,6 @@ public class ParserDialog extends JDialog implements ActionListener {
                                          }
                                        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
         JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
   }
 
   public void setmFile(PsiFile mFile) {
@@ -90,25 +90,29 @@ public class ParserDialog extends JDialog implements ActionListener {
 
   private void initView() {
 
-    buttonGroup = new ButtonGroup();
-    buttonGroup.add(rbtnNormal);
-    buttonGroup.add(rbtnAA);
+    typeGroup = new ButtonGroup();
+    typeGroup.add(rbtnNormal);
+    typeGroup.add(rbtnAA);
+
+    rootGroup = new ButtonGroup();
+    rootGroup.add(rbtnActivity);
+    rootGroup.add(rbtnView);
 
     textArea1.setEnabled(false);
 
     if (Config.PARSER_TYPE == 0) {
       rbtnNormal.setSelected(true);
-      textArea1.setText(Samples.NORMAL);
+      textArea1.setText(Samples.NORMAL_ACTIVITY);
     } else {
       rbtnAA.setSelected(true);
       textArea1.setText(Samples.AA);
     }
 
-
     rbtnNormal.addActionListener(this);
 
     rbtnAA.addActionListener(this);
-
+    rbtnActivity.addActionListener(this);
+    rbtnView.addActionListener(this);
   }
 
   private String getOutFile() {
@@ -134,7 +138,7 @@ public class ParserDialog extends JDialog implements ActionListener {
       out.getParentFile().mkdirs();
     }
     try {
-      FileWriter writer = new FileWriter(out);
+      FileWriter writer = new FileWriter(out, false);
 
       for (String s : result) {
         writer.write(s);
@@ -162,10 +166,21 @@ public class ParserDialog extends JDialog implements ActionListener {
   @Override public void actionPerformed(ActionEvent e) {
     if (e.getSource() == rbtnNormal) {
       Config.PARSER_TYPE = 0;
-      textArea1.setText(Samples.NORMAL);
     } else if (e.getSource() == rbtnAA) {
       Config.PARSER_TYPE = 1;
-      textArea1.setText(Samples.AA);
+    } else if (e.getSource() == rbtnActivity) {
+      Config.ROOT_TYPE = 0;
+    } else if (e.getSource() == rbtnView) {
+      Config.ROOT_TYPE = 1;
     }
+
+    if (Config.PARSER_TYPE == 1) {
+      textArea1.setText(Samples.AA);
+    } else if (Config.ROOT_TYPE == 0){
+      textArea1.setText(Samples.NORMAL_ACTIVITY);
+    } else {
+      textArea1.setText(Samples.NORMAL_VIEW);
+    }
+
   }
 }

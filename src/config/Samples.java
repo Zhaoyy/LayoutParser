@@ -11,9 +11,13 @@ public class Samples {
 
   private static String TAG = "Samples";
 
-  public static final String NORMAL = "\n\tprivate TextView textView;"
-      + "\n\n"
+  public static final String NORMAL_ACTIVITY = "\n\tprivate TextView textView;"
+      + "\n"
       + "\ttextView = (TextView) findViewById(R.id.textView);";
+
+  public static final String NORMAL_VIEW = "\n\tprivate TextView textView;"
+      + "\n"
+      + "\ttextView = (TextView) view.findViewById(R.id.textView);";
 
   public static final String AA = "\n\t@ViewById\n\tTextView textView";
 }
