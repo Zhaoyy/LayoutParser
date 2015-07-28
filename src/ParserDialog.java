@@ -34,7 +34,7 @@ public class ParserDialog extends JDialog implements ActionListener {
   private JRadioButton rbtnView;
 
   private static final String out =
-      "src" + File.separator + "androidTest" + File.separator + "out.txt";
+      "src" + File.separator + "androidTest" + File.separator + "out";
 
   private ButtonGroup typeGroup;
   private ButtonGroup rootGroup;
@@ -102,10 +102,16 @@ public class ParserDialog extends JDialog implements ActionListener {
 
     if (Config.PARSER_TYPE == 0) {
       rbtnNormal.setSelected(true);
-      textArea1.setText(Samples.NORMAL_ACTIVITY);
     } else {
       rbtnAA.setSelected(true);
-      textArea1.setText(Samples.AA);
+    }
+
+    if (Config.ROOT_TYPE == 0) {
+      rbtnActivity.setSelected(true);
+      textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_ACTIVITY : Samples.AA);
+    } else {
+      rbtnView.setSelected(true);
+      textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_VIEW : Samples.AA);
     }
 
     rbtnNormal.addActionListener(this);
@@ -115,11 +121,20 @@ public class ParserDialog extends JDialog implements ActionListener {
     rbtnView.addActionListener(this);
   }
 
-  private String getOutFile() {
+  private File getOutFile() {
     String filePath = mFile.getVirtualFile().getPath();
-    System.out.println(filePath.substring(0, filePath.indexOf("src")));
 
-    return filePath.substring(0, filePath.indexOf("src")) + out;
+    filePath = filePath.substring(0, filePath.indexOf("src")) + out + ".txt";
+
+    File out = new File(filePath);
+
+    if (out.exists()) {
+
+    } else {
+
+    }
+
+    return out;
   }
 
   private void onOK() {
@@ -129,14 +144,11 @@ public class ParserDialog extends JDialog implements ActionListener {
     xmlUtil.setOutType(Config.PARSER_TYPE);
     List<String> result = xmlUtil.readXmlFile(new File(mFile.getVirtualFile().getPath()));
     writeFile(result);
-    dispose();
   }
 
   private void writeFile(List<String> result) {
-    File out = new File(getOutFile());
-    if (!out.getParentFile().exists()) {
-      out.getParentFile().mkdirs();
-    }
+    File out = getOutFile();
+
     try {
       FileWriter writer = new FileWriter(out, false);
 
@@ -149,6 +161,8 @@ public class ParserDialog extends JDialog implements ActionListener {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    dispose();
   }
 
   private void onCancel() {
