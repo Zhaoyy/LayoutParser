@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,7 +38,7 @@ public class MainAction extends AnAction {
 
       MsgDialog msgDialog = new MsgDialog(FILE_TYPE_EOOR);
 
-      msgDialog.setSize(400, 200);
+      msgDialog.setMinimumSize(new Dimension(400, 200));
 
       msgDialog.setLocationRelativeTo(null);
       msgDialog.setVisible(true);
@@ -46,7 +47,7 @@ public class MainAction extends AnAction {
       dialog.setmFile(mFile);
       dialog.setProject(project);
 
-      dialog.setSize(480, 300);
+      dialog.setMinimumSize(new Dimension(400, 300));
 
       dialog.setLocationRelativeTo(null);
       dialog.setVisible(true);

@@ -114,6 +114,8 @@ public class ParserDialog extends JDialog implements ActionListener {
       textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_VIEW : Samples.AA);
     }
 
+    pack();
+
     rbtnNormal.addActionListener(this);
 
     rbtnAA.addActionListener(this);
@@ -196,5 +198,6 @@ public class ParserDialog extends JDialog implements ActionListener {
       textArea1.setText(Samples.NORMAL_VIEW);
     }
 
+    pack();
   }
 }
