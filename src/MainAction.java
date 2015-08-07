@@ -1,23 +1,19 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import java.awt.Dimension;
-import javax.swing.JOptionPane;
 
 /**
  * Created by Administrator on 2015/7/7.
  */
 public class MainAction extends AnAction {
 
-  private Project project;  // current project
-  private PsiFile mFile;    // the file you select
-
   private static final String FILE_TYPE_EOOR = "Sorry! It's not a layout file!\n"
       + "A layout file must be under the 'layout' directory, \nand a xml file.";
+  private Project project;  // current project
+  private PsiFile mFile;    // the file you select
 
   public void actionPerformed(AnActionEvent e) {
     project = e.getProject();
@@ -27,14 +23,13 @@ public class MainAction extends AnAction {
     System.out.println(project.getName());
 
     showDialog();
-
   }
 
   private void showDialog() {
     String filePath = mFile.getVirtualFile().getPath();
 
-    if (!filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals("xml") ||
-        !filePath.contains("layout")) {
+    if (!filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()).equals("xml")
+        || !filePath.contains("layout")) {
 
       MsgDialog msgDialog = new MsgDialog(FILE_TYPE_EOOR);
 
@@ -51,8 +46,6 @@ public class MainAction extends AnAction {
 
       dialog.setLocationRelativeTo(null);
       dialog.setVisible(true);
-
     }
-
   }
 }

@@ -3,10 +3,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
@@ -18,7 +16,7 @@ public class MsgDialog extends JDialog {
   public MsgDialog(String msg) {
     setContentPane(contentPane);
     setModal(true);
-
+    setTitle("Message");
     textArea.setText(msg);
     // call onCancel() when cross is clicked
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -33,7 +31,16 @@ public class MsgDialog extends JDialog {
                                          public void actionPerformed(ActionEvent e) {
                                            onCancel();
                                          }
-                                       }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+                                       }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    pack();
+  }
+
+  public static void main(String[] args) {
+    MsgDialog dialog = new MsgDialog("test message!");
+    dialog.pack();
+    dialog.setVisible(true);
+    System.exit(0);
   }
 
   private void onOK() {
@@ -44,12 +51,5 @@ public class MsgDialog extends JDialog {
   private void onCancel() {
     // add your code here if necessary
     dispose();
-  }
-
-  public static void main(String[] args) {
-    MsgDialog dialog = new MsgDialog("test message!");
-    dialog.pack();
-    dialog.setVisible(true);
-    System.exit(0);
   }
 }

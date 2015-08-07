@@ -9,8 +9,7 @@ package config;
  **/
 public class Config {
 
-  private static String TAG = "Config";
-
   public static int PARSER_TYPE = 0; // 0-normal,1-android annotations
   public static int ROOT_TYPE = 0;  // 0-activity,1-view
+  private static String TAG = "Config";
 }

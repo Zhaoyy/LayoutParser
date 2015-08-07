@@ -28,23 +28,30 @@ import org.xml.sax.SAXException;
  **/
 public class XmlUtil {
 
-  private static String TAG = "XmlUtil";
   public static int NORMAL_TYPE = 0;
   public static int AA_TYPE = 1;//android annotations
-
+  private static String TAG = "XmlUtil";
   private int outType = 0;
-  public void setOutType(int type) {
-    outType = type;
-  }
-  public int getOutType() {
-    return outType;
-  }
-
   private List<String> result;
   private List<String> methods = new ArrayList<String>();
 
   public XmlUtil() {
     result = new ArrayList<String>();
+  }
+
+  public static void main(String args[]) {
+    XmlUtil xmlUtil = new XmlUtil();
+    //        xmlUtil.setOutType(AA_TYPE);
+    //        xmlUtil.readXmlFile("d:\\test.xml");
+    xmlUtil.writeXmlVal("d:\\test.xml", "LinearLayout/LinearLayout/TextView", "@+id/tv");
+  }
+
+  public int getOutType() {
+    return outType;
+  }
+
+  public void setOutType(int type) {
+    outType = type;
   }
 
   public List<String> readXmlFile(File path) {
@@ -68,7 +75,7 @@ public class XmlUtil {
     }
 
     if (outType == NORMAL_TYPE) {
-      result.add("\n\n");
+      result.add("\n");
       for (String s : methods) {
         result.add(s);
       }
@@ -102,10 +109,10 @@ public class XmlUtil {
       if (root.getNodeName().equals(valPaths[0])) {
         i = 1;
       }
-      for (;i < valPaths.length; i++) {
+      for (; i < valPaths.length; i++) {
         Element element = null;
         NodeList nodeList = root.getChildNodes();
-        for (int j = 0;j<nodeList.getLength(); j++) {
+        for (int j = 0; j < nodeList.getLength(); j++) {
           Node node = nodeList.item(j);
           if (node.getNodeType() == Node.ELEMENT_NODE) {
             if (node.getNodeName().equals(valPaths[i])) {
@@ -149,20 +156,23 @@ public class XmlUtil {
     if (NORMAL_TYPE == getOutType()) {
 
       if (Config.ROOT_TYPE == 0) {
-        methods.add(attr.substring(attr.indexOf("/") + 1) + " = (" + node.getNodeName() + ") findViewById(R.id." + attr.substring(attr.indexOf("/") + 1) + ");");
+        methods.add(attr.substring(attr.indexOf("/") + 1)
+            + " = ("
+            + node.getNodeName()
+            + ") findViewById(R.id."
+            + attr.substring(attr.indexOf("/") + 1)
+            + ");");
       } else {
-        methods.add(attr.substring(attr.indexOf("/") + 1) + " = (" + node.getNodeName() + ") view.findViewById(R.id." + attr.substring(attr.indexOf("/") + 1) + ");");
+        methods.add(attr.substring(attr.indexOf("/") + 1)
+            + " = ("
+            + node.getNodeName()
+            + ") view.findViewById(R.id."
+            + attr.substring(attr.indexOf("/") + 1)
+            + ");");
       }
 
       return "private " + node.getNodeName() + " " + attr.substring(attr.indexOf("/") + 1) + ";";
     }
     return null;
-  }
-
-  public static void main(String args[]) {
-    XmlUtil xmlUtil = new XmlUtil();
-    //        xmlUtil.setOutType(AA_TYPE);
-    //        xmlUtil.readXmlFile("d:\\test.xml");
-    xmlUtil.writeXmlVal("d:\\test.xml", "LinearLayout/LinearLayout/TextView", "@+id/tv");
   }
 }
