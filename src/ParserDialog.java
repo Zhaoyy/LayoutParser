@@ -27,7 +27,7 @@ public class ParserDialog extends JDialog implements ActionListener {
   private JButton buttonOK;
   private JButton buttonCancel;
   private JRadioButton rbtnNormal;
-  private JRadioButton rbtnAA;
+  private JRadioButton rbtnButterKnife;
   private JLabel lblName;
   private JTextArea textArea1;
   private JRadioButton rbtnActivity;
@@ -96,7 +96,7 @@ public class ParserDialog extends JDialog implements ActionListener {
 
     typeGroup = new ButtonGroup();
     typeGroup.add(rbtnNormal);
-    typeGroup.add(rbtnAA);
+    typeGroup.add(rbtnButterKnife);
 
     rootGroup = new ButtonGroup();
     rootGroup.add(rbtnActivity);
@@ -105,22 +105,22 @@ public class ParserDialog extends JDialog implements ActionListener {
     if (Config.PARSER_TYPE == 0) {
       rbtnNormal.setSelected(true);
     } else {
-      rbtnAA.setSelected(true);
+      rbtnButterKnife.setSelected(true);
     }
 
     if (Config.ROOT_TYPE == 0) {
       rbtnActivity.setSelected(true);
-      textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_ACTIVITY : Samples.AA);
+      textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_ACTIVITY : Samples.BUTTER_KNIFE);
     } else {
       rbtnView.setSelected(true);
-      textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_VIEW : Samples.AA);
+      textArea1.setText(Config.PARSER_TYPE == 0 ? Samples.NORMAL_VIEW : Samples.BUTTER_KNIFE);
     }
 
     pack();
 
     rbtnNormal.addActionListener(this);
 
-    rbtnAA.addActionListener(this);
+    rbtnButterKnife.addActionListener(this);
     rbtnActivity.addActionListener(this);
     rbtnView.addActionListener(this);
   }
@@ -186,7 +186,7 @@ public class ParserDialog extends JDialog implements ActionListener {
   @Override public void actionPerformed(ActionEvent e) {
     if (e.getSource() == rbtnNormal) {
       Config.PARSER_TYPE = 0;
-    } else if (e.getSource() == rbtnAA) {
+    } else if (e.getSource() == rbtnButterKnife) {
       Config.PARSER_TYPE = 1;
     } else if (e.getSource() == rbtnActivity) {
       Config.ROOT_TYPE = 0;
@@ -195,7 +195,7 @@ public class ParserDialog extends JDialog implements ActionListener {
     }
 
     if (Config.PARSER_TYPE == 1) {
-      textArea1.setText(Samples.AA);
+      textArea1.setText(Samples.BUTTER_KNIFE);
     } else if (Config.ROOT_TYPE == 0) {
       textArea1.setText(Samples.NORMAL_ACTIVITY);
     } else {

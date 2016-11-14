@@ -16,5 +16,7 @@ public class Samples {
       + "\n"
       + "\ttextView = (TextView) view.findViewById(R.id.textView);";
   public static final String AA = "\n\t@ViewById\n\tTextView textView";
+
+  public static final String BUTTER_KNIFE = "\n\t@BindView(R.id.textView) TextView textView;";
   private static String TAG = "Samples";
 }

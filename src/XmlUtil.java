@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 public class XmlUtil {
 
   public static int NORMAL_TYPE = 0;
-  public static int AA_TYPE = 1;//android annotations
+  public static int Butter_knife_TYPE = 1;//ButterKnife
   private static String TAG = "XmlUtil";
   private int outType = 0;
   private List<String> result;
@@ -41,7 +41,7 @@ public class XmlUtil {
 
   public static void main(String args[]) {
     XmlUtil xmlUtil = new XmlUtil();
-    //        xmlUtil.setOutType(AA_TYPE);
+    //        xmlUtil.setOutType(Butter_knife_TYPE);
     //        xmlUtil.readXmlFile("d:\\test.xml");
     xmlUtil.writeXmlVal("d:\\test.xml", "LinearLayout/LinearLayout/TextView", "@+id/tv");
   }
@@ -150,28 +150,22 @@ public class XmlUtil {
     if (attr.isEmpty()) {
       return null;
     }
-    if (AA_TYPE == getOutType()) {
-      return "@ViewById\n" + node.getNodeName() + " " + attr.substring(attr.indexOf("/") + 1) + ";";
+
+    String className = node.getNodeName();
+    String id = attr.substring(attr.indexOf("/") + 1);
+
+    if (Butter_knife_TYPE == getOutType()) {
+      return String.format("@BindView(R.id.%s) %s %s;", id, className, id);
     }
     if (NORMAL_TYPE == getOutType()) {
 
       if (Config.ROOT_TYPE == 0) {
-        methods.add(attr.substring(attr.indexOf("/") + 1)
-            + " = ("
-            + node.getNodeName()
-            + ") findViewById(R.id."
-            + attr.substring(attr.indexOf("/") + 1)
-            + ");");
+        methods.add(String.format("%s = (%s) findViewById(R.id.%s);", id, className, id));
       } else {
-        methods.add(attr.substring(attr.indexOf("/") + 1)
-            + " = ("
-            + node.getNodeName()
-            + ") view.findViewById(R.id."
-            + attr.substring(attr.indexOf("/") + 1)
-            + ");");
+        methods.add(String.format("%s = (%s) view.findViewById(R.id.%s);", id, className, id));
       }
 
-      return "private " + node.getNodeName() + " " + attr.substring(attr.indexOf("/") + 1) + ";";
+      return String.format("private %s %s;", className, id);
     }
     return null;
   }
